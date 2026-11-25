@@ -71,3 +71,29 @@ def baca_data_csv(nama_file):
 
     return data_bersih, jumlah_data_kosong
     
+def cek_kewajaran_data(data, jumlah_kosong):
+    
+    print("\n" + "=" * 75)
+    print(" "*15+"HASIL PENGECEKAN KELENGKAPAN & KEWAJARAN DATA")
+    print("=" * 75)
+    print(f"Total baris data terbaca      : {len(data)} kabupaten/kota")
+    print(f"Baris dengan data kosong/null : {jumlah_kosong} baris")
+
+    data_tidak_wajar = []
+    for item in data:
+        persen = item["persen_recycling_rate"]
+        if persen is None or persen < 0 or persen > 100:
+            data_tidak_wajar.append(item)
+
+    print(f"Data tidak wajar (<0% / >100%): {len(data_tidak_wajar)} daerah")
+    print("-" * 75)
+
+    if data_tidak_wajar:
+        print(f"{'No':<4} | {'Kabupaten/Kota':<28} | {'Provinsi':<22} | {'Rate (%)':>10}")
+        print("-" * 75)
+        for idx, d in enumerate(data_tidak_wajar, start=1):
+            nilai_str = f"{d['persen_recycling_rate']:.2f}%" if d["persen_recycling_rate"] is not None else "KOSONG"
+            print(f"{idx:<4} | {d['nama_kabkota']:<28} | {d['nama_provinsi']:<22} | {nilai_str:>10}")
+    else:
+        print("Seluruh data berada dalam rentang wajar (0% - 100%).")
+    print("=" * 75)
