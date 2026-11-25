@@ -12,7 +12,7 @@ Program ini membantu mengotomatisasi pemeriksaan data sekunder berskala nasional
 
 ---
 
-## ✨ Fitur Utama
+##  Fitur Utama
 
 1. **Pembersihan & Validasi Kewajaran Data (`cek_kewajaran_data`)**
    * Membaca file CSV dengan deteksi pemisah kolom otomatis (`,` atau `;`) dan *encoding* `utf-8-sig`.
@@ -33,7 +33,7 @@ Program ini membantu mengotomatisasi pemeriksaan data sekunder berskala nasional
 
 ---
 
-## 📊 Sumber Dataset
+##  Sumber Dataset
 
 Dataset yang digunakan adalah data sekunder dari portal **Satu Data Kementerian Lingkungan Hidup (KemenLH) / Badan Pengendalian Lingkungan Hidup Republik Indonesia**:
 * **Nama File:** `Tingkat daur ulang (2025).csv`
