@@ -48,3 +48,26 @@ def baca_data_csv(nama_file):
             daur_ulang = bersihkan_angka(row_clean.get("jml_daur_ulang"))
             bahan_baku = bersihkan_angka(row_clean.get("jml_bahan_baku"))
             persen = bersihkan_angka(row_clean.get("persen_recycling_rate"))
+
+            if (
+                not provinsi
+                or not kabkota
+                or timbulan is None
+                or daur_ulang is None
+                or bahan_baku is None
+                or persen is None
+            ):
+                jumlah_data_kosong += 1
+
+            data_bersih.append({
+                "baris": baris_ke,
+                "nama_provinsi": provinsi,
+                "nama_kabkota": kabkota,
+                "jml_timbulan_tahun": timbulan if timbulan is not None else 0.0,
+                "jml_daur_ulang": daur_ulang if daur_ulang is not None else 0.0,
+                "jml_bahan_baku": bahan_baku if bahan_baku is not None else 0.0,
+                "persen_recycling_rate": persen,
+            })
+
+    return data_bersih, jumlah_data_kosong
+    
