@@ -97,3 +97,28 @@ def cek_kewajaran_data(data, jumlah_kosong):
     else:
         print("Seluruh data berada dalam rentang wajar (0% - 100%).")
     print("=" * 75)
+
+def rekapitulasi_per_provinsi(data):
+    rekap = {}
+    total_nasional_timbulan = 0.0
+    total_nasional_daur_ulang = 0.0
+    total_nasional_bahan_baku = 0.0
+
+    for item in data:
+        prov = item["nama_provinsi"] if item["nama_provinsi"] else "Tidak Diketahui"
+        if prov not in rekap:
+            rekap[prov] = {
+                "jumlah_daerah": 0,
+                "timbulan": 0.0,
+                "daur_ulang": 0.0,
+                "bahan_baku": 0.0,
+            }
+
+        rekap[prov]["jumlah_daerah"] += 1
+        rekap[prov]["timbulan"] += item["jml_timbulan_tahun"]
+        rekap[prov]["daur_ulang"] += item["jml_daur_ulang"]
+        rekap[prov]["bahan_baku"] += item["jml_bahan_baku"]
+
+        total_nasional_timbulan += item["jml_timbulan_tahun"]
+        total_nasional_daur_ulang += item["jml_daur_ulang"]
+        total_nasional_bahan_baku += item["jml_bahan_baku"]
