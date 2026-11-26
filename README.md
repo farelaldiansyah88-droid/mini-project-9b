@@ -36,7 +36,7 @@ Program ini mengotomatisasi pengolahan data sekunder berskala nasional agar terh
 
 ---
 
-##  Arsitektur Modular (12 Fungsi)
+##  Rancangan Fungsi Program (12 Fungsi)
 
 Program dirancang secara modular dengan memisahkan fungsi pemrosesan/perhitungan dari fungsi antarmuka laporan:
 
@@ -101,7 +101,7 @@ Dataset yang digunakan adalah data sekunder dari portal **Satu Data Kementerian 
 
 ---
 
-##  Prasyarat & Cara Menjalankan
+##  Prasyarat dan Cara Menjalankan
 
 ### Prasyarat
 * **Python 3.8** atau versi lebih baru.
@@ -118,7 +118,7 @@ Dataset yang digunakan adalah data sekunder dari portal **Satu Data Kementerian 
 
 ---
 
-##  Pengujian & Perbaikan Versi (v2.1)
+##  _Test Case_ dan _Tracing_ (v2.1)
 
 Pengujian dilakukan menggunakan **12 *test case* (`TC-01` hingga `TC-12`)** dan **6 uji regresi (`TC-R1` hingga `TC-R6`)** yang mencakup skenario data normal, nilai batas, berkas kosong, data tidak valid, serta data duplikat pada folder `data_uji/`.
 
