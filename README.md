@@ -1,6 +1,6 @@
 # Sistem Rekapitulasi dan Klasifikasi Tingkat Daur Ulang Sampah Kabupaten/Kota Tahun 2025 Berbasis Python
 
-Mini Project Praktikum Pemrograman Komputer — **Laboratorium Sistem Informasi dan Keputusan (LSIK)**, Departemen Teknik Industri, Fakultas Teknik, Universitas Andalas (2026).
+_Mini Project_ Praktikum Pemrograman Komputer — **Laboratorium Sistem Informasi dan Keputusan (LSIK)**, Departemen Teknik Industri, Fakultas Teknik, Universitas Andalas (2026).
 
 ---
 
@@ -90,12 +90,6 @@ Dataset yang digunakan adalah data sekunder dari portal **Satu Data Kementerian 
 ├── Mini_Project.py                 # Kode sumber utama program (versi akhir 2.1)
 ├── Tingkat daur ulang (2025).csv   # Dataset sumber dari Satu Data KemenLH
 ├── README.md                       # Dokumentasi proyek dan panduan penggunaan
-├── data_uji/                       # Kumpulan dataset pengujian (Test Case Bab III)
-│   ├── tc_batas.csv                # Data uji nilai batas kategori (0%, 9.99%, 10%, 30%, 30.01%, 100%, dll.)
-│   ├── tc_kosong.csv               # Data uji berkas kosong (0 byte)
-│   ├── tc_header.csv               # Data uji berkas yang hanya berisi baris header
-│   ├── tc_tidakvalid.csv           # Data uji nilai tidak valid, teks non-numerik, dan format persen/koma
-│   └── tc_duplikat.csv             # Data uji deteksi baris kabupaten/kota yang berulang
 └── Laporan_Mini_Project.pdf        # Laporan lengkap Mini Project Kelompok 9B
 ```
 
