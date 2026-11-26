@@ -226,3 +226,179 @@ def klasifikasi_kategori(data):
         print("-" * 82)
     elif pilihan != "":
         print("Kategori tidak dikenali atau data kosong.")
+
+
+def filter_per_provinsi(data):
+    print("\n" + "=" * 85)
+    print("FILTER DAERAH BERDASARKAN PROVINSI")
+    print("=" * 85)
+    kata_kunci = input("Masukkan nama provinsi (contoh: Sumatera Barat / Jawa Tengah): ").strip().lower()
+
+    if not kata_kunci:
+        print("Input provinsi tidak boleh kosong.")
+        return
+
+    hasil = [d for d in data if kata_kunci in d["nama_provinsi"].lower()]
+
+    if not hasil:
+        print(f"Tidak ditemukan data untuk provinsi yang mengandung kata '{kata_kunci}'.")
+        return
+
+    print(f"\nDitemukan {len(hasil)} kabupaten/kota:")
+    print("-" * 85)
+    print(f"{'No':<4} | {'Kabupaten/Kota':<28} | {'Provinsi':<22} | {'Timbulan (Ton)':>14} | {'Rate (%)':>8}")
+    print("-" * 85)
+    for idx, d in enumerate(hasil, start=1):
+        rate_str = f"{d['persen_recycling_rate']:.2f}%" if d["persen_recycling_rate"] is not None else "N/A"
+        print(
+            f"{idx:<4} | {d['nama_kabkota']:<28} | {d['nama_provinsi']:<22} | "
+            f"{d['jml_timbulan_tahun']:>14,.2f} | {rate_str:>8}"
+        )
+    print("=" * 85)
+
+
+def cari_satu_daerah(data, kata_kunci):
+    kata_kunci = kata_kunci.strip().lower()
+
+    for d in data:
+        if d["nama_kabkota"].lower() == kata_kunci:
+            return [d]
+
+    return [d for d in data if kata_kunci in d["nama_kabkota"].lower()]
+
+
+def bandingkan_dua_daerah(data):
+    print("\n" + "=" * 85)
+    print("PERBANDINGAN DATA ANTAR DUA KABUPATEN/KOTA")
+    print("=" * 85)
+    nama1 = input("Masukkan nama Kabupaten/Kota Pertama : ").strip()
+    nama2 = input("Masukkan nama Kabupaten/Kota Kedua   : ").strip()
+
+    hasil1 = cari_satu_daerah(data, nama1)
+    hasil2 = cari_satu_daerah(data, nama2)
+
+    if not hasil1:
+        print(f"[!] Daerah '{nama1}' tidak ditemukan di dalam dataset.")
+        return
+    if not hasil2:
+        print(f"[!] Daerah '{nama2}' tidak ditemukan di dalam dataset.")
+        return
+
+    if len(hasil1) > 1:
+        print(f"\nDitemukan beberapa daerah untuk '{nama1}': {[d['nama_kabkota'] for d in hasil1]}")
+        print("Silakan masukkan nama yang lebih lengkap (misal: 'Kota Padang' atau 'Kab. Padang Pariaman').")
+        return
+    if len(hasil2) > 1:
+        print(f"\nDitemukan beberapa daerah untuk '{nama2}': {[d['nama_kabkota'] for d in hasil2]}")
+        print("Silakan masukkan nama yang lebih lengkap.")
+        return
+
+    d1 = hasil1[0]
+    d2 = hasil2[0]
+
+    rate1 = f"{d1['persen_recycling_rate']:.2f}%" if d1["persen_recycling_rate"] is not None else "N/A"
+    rate2 = f"{d2['persen_recycling_rate']:.2f}%" if d2["persen_recycling_rate"] is not None else "N/A"
+
+    rata_nasional, std_nasional, _ = hitung_statistik_nasional(data)
+    z1, ket_z1 = hitung_dan_interpretasi_z(d1["persen_recycling_rate"], rata_nasional, std_nasional)
+    z2, ket_z2 = hitung_dan_interpretasi_z(d2["persen_recycling_rate"], rata_nasional, std_nasional)
+
+    z1_str = f"{z1:+.2f} SD" if z1 is not None else "N/A"
+    z2_str = f"{z2:+.2f} SD" if z2 is not None else "N/A"
+
+    print("\n" + "=" * 85)
+    print(f"{'Parameter':<28} | {d1['nama_kabkota']:<25} | {d2['nama_kabkota']:<25}")
+    print("-" * 85)
+    print(f"{'Provinsi':<28} | {d1['nama_provinsi']:<25} | {d2['nama_provinsi']:<25}")
+    print(f"{'Timbulan Sampah (Ton/Thn)':<28} | {d1['jml_timbulan_tahun']:>25,.2f} | {d2['jml_timbulan_tahun']:>25,.2f}")
+    print(f"{'Sampah Didaur Ulang (Ton)':<28} | {d1['jml_daur_ulang']:>25,.2f} | {d2['jml_daur_ulang']:>25,.2f}")
+    print(f"{'Bahan Baku Dihasilkan (Ton)':<28} | {d1['jml_bahan_baku']:>25,.2f} | {d2['jml_bahan_baku']:>25,.2f}")
+    print(f"{'Tingkat Daur Ulang (%)':<28} | {rate1:>25} | {rate2:>25}")
+    print(f"{'Kategori Daur Ulang':<28} | {tentukan_kategori(d1['persen_recycling_rate']):<25} | {tentukan_kategori(d2['persen_recycling_rate']):<25}")
+    print(f"{'Skor Z vs Nasional':<28} | {z1_str:>25} | {z2_str:>25}")
+    print("=" * 85)
+    print(f"Catatan Nasional (n valid): Rata-rata = {rata_nasional:.2f}%, Standar Deviasi = {std_nasional:.2f}%")
+    print(f"- {d1['nama_kabkota']}: {ket_z1}")
+    print(f"- {d2['nama_kabkota']}: {ket_z2}")
+
+
+def analisis_z_score_daerah(data):
+    print("\n" + "=" * 85)
+    print("ANALISIS Z-SCORE (STANDARISASI KINERJA DAUR ULANG DAERAH)")
+    print("=" * 85)
+
+    rata_nasional, std_nasional, n_valid = hitung_statistik_nasional(data)
+    print(f"Parameter Populasi Sampel Valid (n = {n_valid} daerah):")
+    print(f"  - Rata-rata Nasional (x̄)       : {rata_nasional:.2f}%")
+    print(f"  - Standar Deviasi Nasional (s) : {std_nasional:.2f}%")
+    print("-" * 85)
+
+    nama = input("Masukkan nama Kabupaten/Kota yang ingin dianalisis: ").strip()
+    hasil = cari_satu_daerah(data, nama)
+
+    if not hasil:
+        print(f"[!] Daerah '{nama}' tidak ditemukan di dalam dataset.")
+        return
+
+    if len(hasil) > 1:
+        print(f"\nDitemukan beberapa daerah untuk '{nama}': {[d['nama_kabkota'] for d in hasil]}")
+        print("Silakan masukkan nama yang lebih lengkap (misal: 'Kota Padang' atau 'Kab. Agam').")
+        return
+
+    d = hasil[0]
+    rate = d["persen_recycling_rate"]
+    z, interpretasi = hitung_dan_interpretasi_z(rate, rata_nasional, std_nasional)
+
+    print("\n" + "-" * 85)
+    print(f"HASIL PERHITUNGAN & PEMBACAAN Z-SCORE: {d['nama_kabkota'].upper()} ({d['nama_provinsi']})")
+    print("-" * 85)
+    if z is not None:
+        selisih = rate - rata_nasional
+        print(f"1. Nilai Pengamatan (x)  : {rate:.2f}%")
+        print(f"2. Selisih (x - x̄)       : {selisih:+.2f}%")
+        print(f"3. Rumus Z = (x - x̄) / s : ({rate:.2f} - {rata_nasional:.2f}) / {std_nasional:.2f}")
+        print(f"4. Nilai Z-Score         : {z:+.2f} SD")
+        print(f"5. Pembacaan & Arti      : {interpretasi}")
+    else:
+        print(f"Nilai Rate: {rate} -> {interpretasi}")
+    print("=" * 85)
+
+
+print("=" * 75)
+print("SISTEM REKAPITULASI DAN KLASIFIKASI TINGKAT DAUR ULANG SAMPAH (2025)")
+print("Kelompok 9B - Teknik Industri Universitas Andalas")
+print("=" * 75)
+
+data, jumlah_kosong = baca_data_csv(NAMA_FILE)
+if data:
+    print(f"[INFO] Berhasil memuat {len(data)} data kabupaten/kota dari '{NAMA_FILE}'.")
+
+    while True:
+        print("\nMENU UTAMA:")
+        print("1. Cek Kelengkapan & Kewajaran Data (<0% atau >100%)")
+        print("2. Rekapitulasi Total Sampah & Daur Ulang per Provinsi")
+        print("3. Klasifikasi Kategori Tingkat Daur Ulang (Rendah / Sedang / Tinggi)")
+        print("4. Filter Daftar Kabupaten/Kota berdasarkan Provinsi")
+        print("5. Bandingkan Data Dua Kabupaten/Kota")
+        print("6. Analisis Z-Score & Interpretasi Posisi Daerah")
+        print("0. Keluar")
+
+        pilihan = input("\nPilih menu (0-6): ").strip()
+
+        if pilihan == "1":
+            cek_kewajaran_data(data, jumlah_kosong)
+        elif pilihan == "2":
+            rekapitulasi_per_provinsi(data)
+        elif pilihan == "3":
+            klasifikasi_kategori(data)
+        elif pilihan == "4":
+            filter_per_provinsi(data)
+        elif pilihan == "5":
+            bandingkan_dua_daerah(data)
+        elif pilihan == "6":
+            analisis_z_score_daerah(data)
+        elif pilihan == "0":
+            print("\nTerima kasih telah menggunakan program ini.")
+            break
+        else:
+            print("\n[!] Pilihan tidak valid. Silakan masukkan angka 0 sampai 6.")
