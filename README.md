@@ -57,7 +57,7 @@ Program dirancang secara modular dengan memisahkan fungsi pemrosesan/perhitungan
 
 ---
 
-## 📊 Dataset dan Sumber
+##  Dataset dan Sumber
 
 Dataset yang digunakan adalah data sekunder dari portal **Satu Data Kementerian Lingkungan Hidup (KemenLH) / Badan Pengendalian Lingkungan Hidup Republik Indonesia**:
 * **Nama File:** `Tingkat daur ulang (2025).csv`
