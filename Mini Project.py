@@ -122,3 +122,23 @@ def rekapitulasi_per_provinsi(data):
         total_nasional_timbulan += item["jml_timbulan_tahun"]
         total_nasional_daur_ulang += item["jml_daur_ulang"]
         total_nasional_bahan_baku += item["jml_bahan_baku"]
+
+    print("\n" + "=" * 100)
+    print(" " * 13 + "REKAPITULASI TOTAL TONASE SAMPAH DAN DAUR ULANG PER PROVINSI (TAHUN 2025)")
+    print("=" * 100)
+    print(f"{'No':<4} | {'Provinsi':<26} | {'Jml':>3} | {'Timbulan (Ton)':>17} | {'Daur Ulang (Ton)':>17} | {'Bahan Baku (Ton)':>17} |")
+    print("-" * 100)
+
+    for idx, prov in enumerate(sorted(rekap.keys()), start=1):
+        r = rekap[prov]
+        print(
+            f"{idx:<4} | {prov:<26} | {r['jumlah_daerah']:>3} | "
+            f"{r['timbulan']:>17,.2f} | {r['daur_ulang']:>17,.2f} | {r['bahan_baku']:>17,.2f} |"
+        )
+
+    print("-" * 100)
+    print(
+        f"{'TOTAL NASIONAL':<33} | {len(data):>3} | "
+        f"{total_nasional_timbulan:>17,.2f} | {total_nasional_daur_ulang:>17,.2f} | {total_nasional_bahan_baku:>17,.2f} |"
+    )
+    print("=" * 100)
