@@ -82,3 +82,67 @@ Dataset yang digunakan adalah data sekunder dari portal **Satu Data Kementerian 
 > $$ \mathrm{Recycling\ Rate} = \frac{\mathrm{jml\ daur\ ulang} + \mathrm{jml\ bahan\ baku}}{\mathrm{jml\ timbulan\ tahun}} \times 100\% >$$
 
 ---
+---
+
+##  Struktur Repository
+
+```text
+├── Mini_Project.py                 # Kode sumber utama program (versi akhir 2.1)
+├── Tingkat daur ulang (2025).csv   # Dataset sumber dari Satu Data KemenLH
+├── README.md                       # Dokumentasi proyek dan panduan penggunaan
+├── data_uji/                       # Kumpulan dataset pengujian (Test Case Bab III)
+│   ├── tc_batas.csv                # Data uji nilai batas kategori (0%, 9.99%, 10%, 30%, 30.01%, 100%, dll.)
+│   ├── tc_kosong.csv               # Data uji berkas kosong (0 byte)
+│   ├── tc_header.csv               # Data uji berkas yang hanya berisi baris header
+│   ├── tc_tidakvalid.csv           # Data uji nilai tidak valid, teks non-numerik, dan format persen/koma
+│   └── tc_duplikat.csv             # Data uji deteksi baris kabupaten/kota yang berulang
+└── Laporan_Mini_Project.pdf        # Laporan lengkap Mini Project Kelompok 9B
+```
+
+---
+
+##  Prasyarat & Cara Menjalankan
+
+### Prasyarat
+* **Python 3.8** atau versi lebih baru.
+* Hanya menggunakan pustaka bawaan (*standard library*) Python (`csv` dan `os`), tanpa memerlukan instalasi pustaka eksternal.
+
+### Langkah Penggunaan
+1. Pastikan berkas `Mini_Project.py` dan `Tingkat daur ulang (2025).csv` berada di dalam direktori yang sama.
+2. Buka terminal atau *Command Prompt* pada direktori tersebut.
+3. Jalankan perintah berikut:
+   ```bash
+   python Mini_Project.py
+   ```
+4. Masukkan angka menu **`1` sampai `6`** untuk menjalankan fitur analisis, atau **`0`** untuk keluar dari program.
+
+---
+
+##  Pengujian & Perbaikan Versi (v2.1)
+
+Pengujian dilakukan menggunakan **12 *test case* (`TC-01` hingga `TC-12`)** dan **6 uji regresi (`TC-R1` hingga `TC-R6`)** yang mencakup skenario data normal, nilai batas, berkas kosong, data tidak valid, serta data duplikat pada folder `data_uji/`.
+
+Berdasarkan hasil pengujian dan *tracing*, dilakukan pembaruan ke **versi 2.1** untuk menangani temuan utama:
+* **Menampilkan Rincian Kategori Tidak Wajar (`B1`):** Penyesuaian metode `.title()` agar kategori `"Tidak Wajar"` dapat dipilih dan ditampilkan pada Menu 3.
+* **Pengecualian Anomali pada Rekapitulasi (`B2`):** Data berkategori `"Tidak Wajar"` (Kab. Purworejo, $291,62\%$) tidak diikutsertakan dalam penjumlahan total provinsi dan nasional pada Menu 2 agar tonase agregat tetap akurat.
+* **Pesan Galat Berkas Kosong (`B3`):** Menampilkan pesan `[ERROR]` yang informatif apabila berkas CSV kosong atau hanya berisi baris judul kolom.
+* **Deteksi Data Duplikat (`B4`):** Menggunakan struktur `set` (`daerah_tercatat`) pada `baca_data_csv` untuk mendeteksi, memberi peringatan, dan melewati baris wilayah yang berulang.
+
+---
+
+##  Batasan Program
+
+* Program berjalan secara luring (*offline*) membaca berkas CSV lokal dan tidak mengambil data langsung dari internet.
+* Informasi yang diolah terbatas pada variabel agregat yang tersedia pada dataset tanpa rincian jenis material sampah (seperti plastik, kertas, atau organik).
+* Antarmuka program berbasis teks pada terminal tanpa antarmuka grafis (GUI) maupun aplikasi web.
+
+---
+
+##  Tim Penyusun (Kelompok 9B)
+
+* **Farel Aldiansyah** (`2610931002`)
+* **Muhammad Irfan Eldzaky** (`2610932021`)
+* **Habiburrahman El Shirazy** (`2610933035`)
+
+**Dosen Pengampu:** Dr. Eng Ir. Ardhian Agung Yulianto, S.Kom., M.T.  
+**Asisten Pembimbing:** Badra Allam Zonta
