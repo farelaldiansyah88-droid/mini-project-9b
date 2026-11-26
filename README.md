@@ -79,8 +79,5 @@ Dataset yang digunakan adalah data sekunder dari portal **Satu Data Kementerian 
 
 > **Catatan Formula:** Nilai `persen_recycling_rate` pada dataset dihitung berdasarkan gabungan sampah didaur ulang dan bahan baku hasil pengolahan:
 >
-> $$
-> \_text{Recycling Rate} = \frac{\_text{jml\_daur\_ulang} + \_text{jml\_bahan\_baku}}{\_text{jml\_timbulan\_tahun}} \times 100\%
-> $$
-
+> $$> \mathrm{Recycling\ Rate} = \frac{\mathrm{jml\ daur\ ulang} + \mathrm{jml\ bahan\ baku}}{\mathrm{jml\ timbulan\ tahun}} \times 100\% >$$
 ---
