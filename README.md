@@ -75,9 +75,12 @@ Dataset yang digunakan adalah data sekunder dari portal **Satu Data Kementerian 
 | 6 | `jml_timbulan_tahun` | Jumlah timbulan sampah tahunan (ton) | `35331,124` | Ya |
 | 7 | `jml_daur_ulang` | Jumlah sampah yang didaur ulang (ton) | `0` | Ya |
 | 8 | `jml_bahan_baku` | Jumlah bahan baku hasil pengolahan sampah (ton) | `18,615` | Ya |
-| 9 | `persen_recycling_rate` | Persentase tingkat daur ulang ($\%$) | `0,05` | Ya |
+| 9 | `persen_recycling_rate` | Persentase tingkat daur ulang (%) | `0,05` | Ya |
 
 > **Catatan Formula:** Nilai `persen_recycling_rate` pada dataset dihitung berdasarkan gabungan sampah didaur ulang dan bahan baku hasil pengolahan:
-> $$\text{Recycling Rate} = \frac{\text{jml\_daur\_ulang} + \text{jml\_bahan\_baku}}{\text{jml\_timbulan\_tahun}} \times 100\%$$
+>
+> $$
+> \text{Recycling Rate} = \frac{\text{jml\_daur\_ulang} + \text{jml\_bahan\_baku}}{\text{jml\_timbulan\_tahun}} \times 100\%
+> $$
 
 ---
