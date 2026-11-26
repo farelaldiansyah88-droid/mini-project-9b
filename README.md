@@ -1,6 +1,6 @@
 # Sistem Rekapitulasi dan Klasifikasi Tingkat Daur Ulang Sampah Kabupaten/Kota Tahun 2025 Berbasis Python
 
-Mini Project Praktikum Pemrograman Komputer (`TIN61104`) — **Laboratorium Sistem Informasi dan Keputusan (LSIK)**, Departemen Teknik Industri, Fakultas Teknik, Universitas Andalas (2026).
+Mini Project Praktikum Pemrograman Komputer — **Laboratorium Sistem Informasi dan Keputusan (LSIK)**, Departemen Teknik Industri, Fakultas Teknik, Universitas Andalas (2026).
 
 ---
 
@@ -79,5 +79,6 @@ Dataset yang digunakan adalah data sekunder dari portal **Satu Data Kementerian 
 
 > **Catatan Formula:** Nilai `persen_recycling_rate` pada dataset dihitung berdasarkan gabungan sampah didaur ulang dan bahan baku hasil pengolahan:
 >
-> $$> \mathrm{Recycling\ Rate} = \frac{\mathrm{jml\ daur\ ulang} + \mathrm{jml\ bahan\ baku}}{\mathrm{jml\ timbulan\ tahun}} \times 100\% >$$
+> $$ \mathrm{Recycling\ Rate} = \frac{\mathrm{jml\ daur\ ulang} + \mathrm{jml\ bahan\ baku}}{\mathrm{jml\ timbulan\ tahun}} \times 100\% >$$
+
 ---
