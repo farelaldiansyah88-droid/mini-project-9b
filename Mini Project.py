@@ -1,7 +1,7 @@
 import csv
 import os
 
-NAMA_FILE = "Tingkat daur ulang (2025).cv"
+NAMA_FILE = "Tingkat daur ulang (2025).csv"
 
 
 def bersihkan_angka(nilai_str):
@@ -363,6 +363,14 @@ def analisis_z_score_daerah(data):
         print(f"Nilai Rate: {rate} -> {interpretasi}")
     print("=" * 85)
 
+cari_satu_daerah_lama = cari_satu_daerah
+
+def cari_satu_daerah(data, kata_kunci):
+    if kata_kunci is None or kata_kunci.strip() == "":
+        print("[!] Input nama kabupaten/kota tidak boleh kosong. "
+              "Silakan masukkan nama daerah yang valid (contoh: 'Kota Padang').")
+        return []
+    return cari_satu_daerah_lama(data, kata_kunci)
 
 print("=" * 75)
 print("SISTEM REKAPITULASI DAN KLASIFIKASI TINGKAT DAUR ULANG SAMPAH (2025)")
